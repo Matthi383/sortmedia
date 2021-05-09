@@ -30,7 +30,7 @@ from datetime import datetime, timedelta
 # Setting locale to the 'local' value
 locale.setlocale(locale.LC_ALL, "")
 
-exiftool_location = shutil.which("exiftooldfdsfsd")
+exiftool_location = shutil.which("exiftool")
 if not exiftool_location:
     raise FileNotFoundError("Couldn't find 'exiftool' in the PATH")
 

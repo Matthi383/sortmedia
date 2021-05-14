@@ -131,7 +131,7 @@ def get_oldest_timestamp(
 
     # ssetup tags to ignore
     ignore_groups = ["ICC_Profile"] + additional_groups_to_ignore
-    ignore_tags = ["SourceFile", "XMP:HistoryWhen"] + additional_tags_to_ignore
+    ignore_tags = ["MakerNotes:Time", "SourceFile", "XMP:HistoryWhen"] + additional_tags_to_ignore
 
     if print_all_tags:
         print("All relevant tags:")

@@ -9,22 +9,16 @@ Forked on 20/04/2021 by Sebastian Cruz
 
 """
 
-from __future__ import print_function, with_statement
-
 import os
 import shutil
 import subprocess
 import sys
 
-try:
-    import json
-except:
-    import simplejson as json
+import json
 
 import filecmp
 import locale
 import re
-import shutil
 from datetime import datetime, timedelta
 
 # Setting locale to the 'local' value
@@ -56,7 +50,8 @@ def parse_date_exif(date_string):
     # parse year, month, day
     date_entries = elements[0].split(":")  # ['YYYY', 'MM', 'DD']
 
-    # check if three entries, nonzero data, and no decimal (which occurs for timestamps with only time but no date)
+    # check if three entries, nonzero data, and no decimal
+    # (which occurs for timestamps with only time but no date)
     if len(date_entries) == 3 and date_entries[0] > "0000" and "." not in "".join(date_entries):
         year = int(date_entries[0])
         month = int(date_entries[1])
@@ -103,7 +98,8 @@ def parse_date_exif(date_string):
     except ValueError:
         return None  # errors in time format
 
-    # try converting it (some "valid" dates are way before 1900 and cannot be parsed by strtime later)
+    # try converting it
+    # (some "valid" dates are way before 1900 and cannot be parsed by strtime later)
     try:
         date.strftime("%Y/%m-%b")  # any format with year, month, day, would work here.
     except ValueError:
@@ -151,7 +147,8 @@ def get_oldest_timestamp(
             if print_all_tags:
                 print(str(key) + ", " + str(date))
 
-            # (rare) check if multiple dates returned in a list, take the first one which is the oldest
+            # (rare) check if multiple dates returned in a list,
+            # take the first one which is the oldest
             if isinstance(date, list):
                 date = date[0]
 
@@ -159,7 +156,7 @@ def get_oldest_timestamp(
                 exifdate = parse_date_exif(
                     date
                 )  # check for poor-formed exif data, but allow continuation
-            except Exception as e:
+            except Exception:
                 exifdate = None
 
             if exifdate and exifdate < oldest_date:
@@ -196,7 +193,8 @@ def check_for_early_morning_photos(date, day_begins):
     return date
 
 
-#  this class is based on code from Sven Marnach (http://stackoverflow.com/questions/10075115/call-exiftool-from-a-python-script)
+#  this class is based on code from Sven Marnach
+#  (http://stackoverflow.com/questions/10075115/call-exiftool-from-a-python-script)
 class ExifTool(object):
     """used to run ExifTool from Python and keep it open"""
 
@@ -261,7 +259,8 @@ def sortPhotos(
     keep_filename=False,
 ):
     """
-    This function is a convenience wrapper around ExifTool based on common usage scenarios for sortphotos.py
+    This function is a convenience wrapper around ExifTool based on common usage scenarios
+    for sortphotos.py
 
     Parameters
     ---------------
@@ -277,18 +276,22 @@ def sortPhotos(
         (https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior)
         None to not rename file
     recursive : bool
-        True if you want src_dir to be searched recursively for files (False to search only in top-level of src_dir)
+        True if you want src_dir to be searched recursively for files (False to search only in
+        top-level of src_dir)
     copy_files : bool
         True if you want files to be copied over from src_dir to dest_dir rather than moved
     test : bool
-        True if you just want to simulate how the files will be moved without actually doing any moving/copying
+        True if you just want to simulate how the files will be moved without actually doing any
+        moving/copying
     remove_duplicates : bool
         True to remove files that are exactly the same in name and a file hash
     keep_filename : bool
         True to append original filename in case of duplicates instead of increasing number
     day_begins : int
-        what hour of the day you want the day to begin (only for classification purposes).  Defaults at 0 as midnight.
-        Can be used to group early morning photos with the previous day.  must be a number between 0-23
+        what hour of the day you want the day to begin (only for classification purposes).
+        Defaults at 0 as midnight.
+        Can be used to group early morning photos with the previous day.
+        must be a number between 0-23
     additional_groups_to_ignore : list(str)
         tag groups that will be ignored when searching for file data.  By default File is ignored
     additional_tags_to_ignore : list(str)
@@ -371,7 +374,8 @@ def sortPhotos(
         if not date:
             if verbose:
                 print(
-                    "No valid dates were found using the specified tags.  File will remain where it is."
+                    "No valid dates were found using the specified tags. "
+                    "File will remain where it is."
                 )
                 print()
                 # sys.stdout.flush()
@@ -480,7 +484,8 @@ def main():
     # setup command line parsing
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
-        description="Sort files (primarily photos and videos) into folders by date\nusing EXIF and other metadata",
+        description="Sort files (primarily photos and videos) into folders by date "
+        "using EXIF and other metadata.",
     )
     parser.add_argument("src_dir", type=str, help="source directory")
     parser.add_argument("dest_dir", type=str, help="destination directory")
@@ -493,7 +498,8 @@ def main():
         "-t",
         "--test",
         action="store_true",
-        help="run a test.  files will not be moved/copied\ninstead you will just a list of would happen",
+        help="run a test. files will not be moved/copied "
+        "instead you will just a list of would happen",
     )
     parser.add_argument(
         "--sort",
@@ -516,7 +522,8 @@ def main():
     parser.add_argument(
         "--keep-filename",
         action="store_true",
-        help="In case of duplicated output filenames an increasing number and the original file name will be appended",
+        help="In case of duplicated output filenames an increasing number and the original file "
+        "name will be appended",
         default=False,
     )
     parser.add_argument(

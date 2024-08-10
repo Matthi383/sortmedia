@@ -66,7 +66,7 @@ def parse_date_exif(date_string):
     second = 0
 
     if len(elements) > 1:
-        time_entries = re.split("(\+|-|Z)", elements[1])  # ['HH:MM:SS', '+', 'HH:MM']
+        time_entries = re.split(r"(\+|-|Z)", elements[1])  # ['HH:MM:SS', '+', 'HH:MM']
         time = time_entries[0].split(":")  # ['HH', 'MM', 'SS']
 
         if len(time) == 3:
@@ -499,7 +499,7 @@ def main():
         "--test",
         action="store_true",
         help="run a test. files will not be moved/copied "
-        "instead you will just a list of would happen",
+        "instead you will just get a list of would happen",
     )
     parser.add_argument(
         "--sort",

@@ -4,16 +4,16 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="sortphotos",
+    name="sortmedia",
     version="1.0",
     description="Organizes photos and videos into folders using date/time information",
-    author="Sebastian Cruz",
+    author="Matthias Radl",
     packages=find_packages(),
     include_package_data=True,
     license="MIT License",
     entry_points={
         "console_scripts": [
-            "sortphotos = src.sortphotos:main",
+            "sortmedia = src.sortmedia:main",
         ]
     },
 )

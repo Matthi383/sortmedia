@@ -24,10 +24,7 @@ from datetime import datetime, timedelta
 # Setting locale to the 'local' value
 locale.setlocale(locale.LC_ALL, "")
 
-exiftool_location = shutil.which("exiftool")
-if not exiftool_location:
-    raise FileNotFoundError("Couldn't find 'exiftool' in the PATH")
-
+exiftool_location = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Image-ExifTool', 'exiftool')
 
 # -------- convenience methods -------------
 
@@ -306,8 +303,7 @@ def sortPhotos(
     """
 
     # some error checking
-    if not os.path.exists(src_dir):
-        raise Exception("Source directory does not exist")
+    exiftool_location = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Image-ExifTool', 'exiftool')
 
     # setup arguments to exiftool
     args = ["-j", "-a", "-G"]
